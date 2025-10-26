@@ -28,6 +28,7 @@ Complete documentation for building and deploying Karakeep Social AI, your AI-po
 - [Queue Processing](./transcription/queue-processing.md) - Background processing for long videos
 
 ### Platform Adapters
+- [Getting Started](./platforms/getting-started.md) - **Start here!** Quick guide to use Twitter/Reddit
 - [Adapter Architecture](./platforms/adapter-architecture.md) - Base interface and patterns
 - [GitHub Integration](./platforms/github.md) - Starred repositories sync
 - [Twitter/X Integration](./platforms/twitter.md) - Bookmarks sync (planned)
@@ -55,6 +56,7 @@ Complete documentation for building and deploying Karakeep Social AI, your AI-po
 ## 🎯 Quick Navigation by Task
 
 ### I want to...
+- **Start syncing my bookmarks** → [Platform Getting Started](./platforms/getting-started.md) 🆕
 - **Get started quickly** → [Quick Start Guide](./planning/quick-start.md)
 - **Understand the architecture** → [System Architecture](./architecture/system-design.md)
 - **Set up AI features** → [Claude Setup](./ai/claude-setup.md)

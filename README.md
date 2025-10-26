@@ -52,22 +52,27 @@ npm run dev
 
 ✨ **Server running at http://localhost:3000**
 
-📖 **Detailed setup guide**: [guides/GETTING_STARTED.md](guides/GETTING_STARTED.md)
+📖 **Next steps**:
+- [Quick Start Guide](guides/GETTING_STARTED.md) - Full setup
+- [Platform Setup](docs/platforms/getting-started.md) - Start syncing Twitter/Reddit 🆕
 
 ---
 
 ## ✨ Features
 
-### 📱 Multi-Platform Support (8 Platforms)
+### 📱 Multi-Platform Support
 
-- **Twitter/X** - Bookmarks and saved tweets
-- **Reddit** - Saved posts and comments
-- **YouTube** - Liked videos with full transcription
-- **TikTok** - Favorite videos with transcription
-- **Instagram** - Saved posts and reels with transcription
-- **Dribbble** - Liked shots
-- **Facebook** - Saved posts
-- **GitHub** - ⭐ Starred repositories with README content
+**Currently Available:**
+- ✅ **Twitter/X** - Bookmarks and saved tweets ([Setup Guide](docs/platforms/getting-started.md#twitterx-setup))
+- ✅ **Reddit** - Saved posts and comments ([Setup Guide](docs/platforms/getting-started.md#reddit-setup))
+
+**Coming Soon:**
+- 🚧 **GitHub** - ⭐ Starred repositories with README content
+- 📋 **YouTube** - Liked videos with full transcription
+- 📋 **TikTok** - Favorite videos with transcription
+- 📋 **Instagram** - Saved posts and reels with transcription
+- 📋 **Dribbble** - Liked shots
+- 📋 **Facebook** - Saved posts
 
 ### 🤖 AI-Powered Features
 

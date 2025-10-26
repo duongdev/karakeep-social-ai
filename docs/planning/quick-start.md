@@ -6,6 +6,7 @@ Get Karakeep up and running in under 10 minutes.
 
 ## Navigation
 
+- **[Platform Getting Started](../platforms/getting-started.md)** - Start syncing Twitter/Reddit bookmarks
 - [Roadmap](./roadmap.md)
 - [Cost Analysis](./cost-analysis.md)
 - [System Design](../architecture/system-design.md)
@@ -88,6 +89,8 @@ The API will be available at `http://localhost:3000`
 
 ## Quick Test
 
+> **💡 Tip**: For detailed platform setup instructions, see [Platform Getting Started Guide](../platforms/getting-started.md)
+
 ### 1. Add a Platform Account
 
 ```bash
@@ -97,9 +100,8 @@ curl -X POST http://localhost:3000/api/accounts \
   -d '{
     "platform": "twitter",
     "username": "yourusername",
-    "authType": "token",
     "credentials": {
-      "token": "your-twitter-token"
+      "bearerToken": "your-twitter-bearer-token"
     }
   }'
 ```
@@ -370,7 +372,7 @@ PORT=3001 npm run dev
 
 ## Next Steps
 
-1. **Add Platform Accounts**: Set up your social media accounts
+1. **Add Platform Accounts**: Follow [Platform Getting Started Guide](../platforms/getting-started.md)
 2. **Configure Sync**: Set up cron jobs or manual sync
 3. **Enable AI Features**: Configure Claude for analysis
 4. **Deploy**: Push to Vercel or Docker
