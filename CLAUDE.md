@@ -224,6 +224,53 @@ Before implementing:
 - ✅ Rate limiting for external APIs
 - ✅ Proper logging
 
+### Testing and Code Coverage
+
+**Current Status (2025-10-26):**
+- 107 tests passing
+- Coverage: Statements 40%, Branches 42%, Lines 39%, Functions 57%
+- See `docs/development/testing.md` for complete testing guide
+
+**Coverage Strategy:**
+
+The project follows a **gradual coverage improvement plan** with realistic, incremental targets:
+
+| Phase | Timeline | Coverage Targets | Focus Areas |
+|-------|----------|-----------------|-------------|
+| Phase 1 (Current) | 2025-10-26 | 40% statements, 40% branches | Core infrastructure, adapters foundation |
+| Phase 2 | Q2 2025 | 55% statements, 50% branches | API endpoints, platform adapters completion |
+| Phase 3 | Q3 2025 | 70% statements, 60% branches | AI integration, transcription workflows |
+| Phase 4 | Q4 2025 | 80% statements, 70% branches | Performance, security, edge cases |
+
+**Why Gradual Coverage?**
+
+- ✅ Allows rapid development while maintaining quality
+- ✅ Focuses testing effort on high-value areas first
+- ✅ Prevents CI blockage while building out features
+- ✅ Encourages incremental improvement over time
+
+**When Adding New Code:**
+
+1. Write tests for new features as you implement them
+2. Aim to meet or exceed current coverage thresholds
+3. Prioritize testing critical paths and error handling
+4. Update `jest.config.js` thresholds when team-wide coverage improves
+
+**Running Tests:**
+
+```bash
+# Run all tests
+npm test
+
+# Run with coverage report
+npm run test:coverage
+
+# Run specific test file
+npm test -- path/to/test.test.ts
+```
+
+See `docs/development/testing.md` for detailed testing guidelines and best practices.
+
 ## Platform Adapter Strategy
 
 ### When to Create Detailed Adapter Documentation

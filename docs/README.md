@@ -103,7 +103,7 @@ Complete documentation for building and deploying Karakeep Social AI, your AI-po
 | Platform Adapters | 🚧 In Progress | 2025-10-26 |
 | Deployment | ✅ Complete | 2025-10-26 |
 | API Reference | 📋 Planned | - |
-| Development | 📋 Planned | - |
+| Development | 🚧 In Progress | 2025-10-26 |
 
 ## 🤝 Contributing to Documentation
 
