@@ -32,16 +32,23 @@ export {
   UnsupportedOperationError
 } from './errors'
 
-// Platform adapters will be imported and registered here as they are implemented
-// Example:
-// import { TwitterAdapter } from './twitter'
-// import { RedditAdapter } from './reddit'
-// import { GitHubAdapter } from './github'
-//
-// adapterRegistry.register('twitter', {
-//   displayName: 'Twitter / X',
-//   description: 'Twitter bookmarks and saved tweets',
-//   supportedAuthTypes: [AuthType.OAUTH2, AuthType.BEARER_TOKEN],
-//   requiresWebhookSupport: false,
-//   adapterClass: TwitterAdapter
-// })
+// Platform Adapters
+import { RedditAdapter } from './reddit'
+
+// Register platform adapters
+adapterRegistry.register('reddit', {
+  displayName: 'Reddit',
+  description: 'Reddit saved posts and comments',
+  supportedAuthTypes: [AuthType.OAUTH2, AuthType.USERNAME_PASSWORD],
+  requiresWebhookSupport: false,
+  adapterClass: RedditAdapter
+})
+
+// Future platform adapters:
+// - Twitter/X
+// - GitHub
+// - YouTube
+// - TikTok
+// - Dribbble
+// - Instagram
+// - Facebook

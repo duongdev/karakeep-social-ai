@@ -139,11 +139,11 @@ This roadmap breaks down the Karakeep implementation into manageable phases over
    - [ ] Parse tweets and media
    - [ ] Handle rate limits
 
-2. **Reddit Adapter**
-   - [ ] OAuth2 authentication
-   - [ ] Fetch saved posts
-   - [ ] Parse Reddit posts
-   - [ ] Handle pagination
+2. **Reddit Adapter** ✅ **COMPLETED**
+   - [x] OAuth2 authentication
+   - [x] Fetch saved posts
+   - [x] Parse Reddit posts
+   - [x] Handle pagination
 
 3. **GitHub Adapter** (see [GitHub Guide](../platforms/github.md))
    - [ ] PAT authentication
