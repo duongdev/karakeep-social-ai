@@ -7,19 +7,18 @@
 import {
   type Post,
   type AuthType,
-  type PaginatedResponse,
   type RateLimitInfo,
   type AdapterConfig,
-  type WebhookConfig
-} from './types'
+  type WebhookConfig,
+} from "./types";
 import {
   AdapterError,
   AuthenticationError,
   RateLimitError,
   ResourceNotFoundError,
   NetworkError,
-  ServiceUnavailableError
-} from './errors'
+  ServiceUnavailableError,
+} from "./errors";
 
 /**
  * Platform Adapter Interface
@@ -31,85 +30,85 @@ export interface PlatformAdapter {
    * Platform identifier (lowercase)
    * Examples: 'twitter', 'reddit', 'github', 'youtube'
    */
-  readonly platform: string
+  readonly platform: string;
 
   /**
    * Authenticate with the platform using provided credentials
    * @param credentials Platform-specific credentials
    * @returns Promise<boolean> indicating success
    */
-  authenticate(credentials: any): Promise<boolean>
+  authenticate(credentials: any): Promise<boolean>;
 
   /**
    * Fetch saved/bookmarked posts from the platform
    * @param since Optional date to fetch posts since (for incremental sync)
    * @returns Promise<Post[]> array of standardized posts
    */
-  fetchSavedPosts(since?: Date): Promise<Post[]>
+  fetchSavedPosts(since?: Date): Promise<Post[]>;
 
   /**
    * Validate that current credentials are still valid
    * @returns Promise<boolean> indicating if credentials are valid
    */
-  validateCredentials(): Promise<boolean>
+  validateCredentials(): Promise<boolean>;
 
   /**
    * Get supported authentication types for this platform
    * @returns AuthType[] array of supported auth types
    */
-  getSupportedAuthTypes(): AuthType[]
+  getSupportedAuthTypes(): AuthType[];
 
   /**
    * Optional: Get current rate limit information
    */
-  getRateLimitInfo?(): Promise<RateLimitInfo>
+  getRateLimitInfo?(): Promise<RateLimitInfo>;
 
   /**
    * Optional: Setup webhook for real-time updates
    * Only available for platforms that support webhooks (e.g., GitHub)
    */
-  setupWebhook?(config: WebhookConfig): Promise<void>
+  setupWebhook?(config: WebhookConfig): Promise<void>;
 
   /**
    * Optional: Remove webhook
    */
-  removeWebhook?(webhookId: string): Promise<void>
+  removeWebhook?(webhookId: string): Promise<void>;
 }
 
 /**
  * Abstract base adapter class with common functionality
  */
 export abstract class BaseAdapter implements PlatformAdapter {
-  protected credentials: any
-  protected config: Required<AdapterConfig>
+  protected credentials: any;
+  protected config: Required<AdapterConfig>;
 
-  abstract readonly platform: string
+  abstract readonly platform: string;
 
   constructor(credentials: any, config?: AdapterConfig) {
-    this.credentials = credentials
+    this.credentials = credentials;
     this.config = {
       maxRetries: config?.maxRetries ?? 3,
       timeout: config?.timeout ?? 30000,
       rateLimit: config?.rateLimit ?? {
         maxRequests: 50,
-        windowMs: 60000 // 1 minute
+        windowMs: 60000, // 1 minute
       },
-      debug: config?.debug ?? false
-    }
+      debug: config?.debug ?? false,
+    };
   }
 
   // Abstract methods that must be implemented by subclasses
-  abstract authenticate(credentials: any): Promise<boolean>
-  abstract fetchSavedPosts(since?: Date): Promise<Post[]>
-  abstract validateCredentials(): Promise<boolean>
-  abstract getSupportedAuthTypes(): AuthType[]
+  abstract authenticate(credentials: any): Promise<boolean>;
+  abstract fetchSavedPosts(since?: Date): Promise<Post[]>;
+  abstract validateCredentials(): Promise<boolean>;
+  abstract getSupportedAuthTypes(): AuthType[];
 
   /**
    * Common rate limiting logic
    * @param waitMs Milliseconds to wait
    */
   protected async rateLimit(waitMs: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, waitMs))
+    return new Promise((resolve) => setTimeout(resolve, waitMs));
   }
 
   /**
@@ -119,41 +118,41 @@ export abstract class BaseAdapter implements PlatformAdapter {
    */
   protected async retryWithBackoff<T>(
     fn: () => Promise<T>,
-    maxRetries?: number
+    maxRetries?: number,
   ): Promise<T> {
-    const retries = maxRetries ?? this.config.maxRetries
+    const retries = maxRetries ?? this.config.maxRetries;
 
     for (let i = 0; i < retries; i++) {
       try {
-        return await fn()
+        return await fn();
       } catch (error) {
         // Don't retry on auth errors or client errors
         if (
           error instanceof AuthenticationError ||
           error instanceof ResourceNotFoundError
         ) {
-          throw error
+          throw error;
         }
 
         // Last retry - throw the error
         if (i === retries - 1) {
-          throw error
+          throw error;
         }
 
         // Calculate exponential backoff: 1s, 2s, 4s, 8s...
-        const delay = Math.min(Math.pow(2, i) * 1000, 30000)
+        const delay = Math.min(Math.pow(2, i) * 1000, 30000);
 
         if (this.config.debug) {
           console.log(
-            `[${this.platform}] Retry ${i + 1}/${retries} after ${delay}ms`
-          )
+            `[${this.platform}] Retry ${i + 1}/${retries} after ${delay}ms`,
+          );
         }
 
-        await this.rateLimit(delay)
+        await this.rateLimit(delay);
       }
     }
 
-    throw new Error('Max retries exceeded')
+    throw new Error("Max retries exceeded");
   }
 
   /**
@@ -163,62 +162,62 @@ export abstract class BaseAdapter implements PlatformAdapter {
    */
   protected handleError(error: any, context: string): never {
     if (this.config.debug) {
-      console.error(`[${this.platform}] ${context}:`, error)
+      console.error(`[${this.platform}] ${context}:`, error);
     }
 
     // Already an AdapterError - just rethrow
     if (error instanceof AdapterError) {
-      throw error
+      throw error;
     }
 
     // Handle HTTP errors from axios or fetch
     if (error.response) {
-      const status = error.response.status
+      const status = error.response.status;
 
       switch (status) {
         case 401:
         case 403:
-          throw new AuthenticationError(this.platform, error)
+          throw new AuthenticationError(this.platform, error);
 
         case 404:
           throw new ResourceNotFoundError(
             this.platform,
-            error.config?.url || 'unknown',
-            error
-          )
+            error.config?.url || "unknown",
+            error,
+          );
 
         case 429:
-          const resetTime = this.extractRateLimitReset(error.response.headers)
-          throw new RateLimitError(this.platform, resetTime, error)
+          const resetTime = this.extractRateLimitReset(error.response.headers);
+          throw new RateLimitError(this.platform, resetTime, error);
 
         case 500:
         case 502:
         case 503:
         case 504:
-          throw new ServiceUnavailableError(this.platform, error)
+          throw new ServiceUnavailableError(this.platform, error);
 
         default:
           throw new AdapterError(
             `HTTP ${status} error: ${error.message}`,
-            'HTTP_ERROR',
+            "HTTP_ERROR",
             this.platform,
-            error
-          )
+            error,
+          );
       }
     }
 
     // Handle network errors
-    if (error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
-      throw new NetworkError(this.platform, error)
+    if (error.code === "ECONNREFUSED" || error.code === "ETIMEDOUT") {
+      throw new NetworkError(this.platform, error);
     }
 
     // Generic error
     throw new AdapterError(
-      error.message || 'Unknown error',
-      'UNKNOWN_ERROR',
+      error.message || "Unknown error",
+      "UNKNOWN_ERROR",
       this.platform,
-      error
-    )
+      error,
+    );
   }
 
   /**
@@ -228,22 +227,22 @@ export abstract class BaseAdapter implements PlatformAdapter {
   private extractRateLimitReset(headers: any): Date | undefined {
     // Try common header names
     const resetHeader =
-      headers['x-ratelimit-reset'] ||
-      headers['x-rate-limit-reset'] ||
-      headers['ratelimit-reset']
+      headers["x-ratelimit-reset"] ||
+      headers["x-rate-limit-reset"] ||
+      headers["ratelimit-reset"];
 
-    if (!resetHeader) return undefined
+    if (!resetHeader) return undefined;
 
     // Unix timestamp (seconds)
     if (/^\d+$/.test(resetHeader)) {
-      return new Date(parseInt(resetHeader) * 1000)
+      return new Date(parseInt(resetHeader) * 1000);
     }
 
     // ISO date string
     try {
-      return new Date(resetHeader)
+      return new Date(resetHeader);
     } catch {
-      return undefined
+      return undefined;
     }
   }
 
@@ -254,7 +253,7 @@ export abstract class BaseAdapter implements PlatformAdapter {
    */
   protected log(message: string, data?: any): void {
     if (this.config.debug) {
-      console.log(`[${this.platform}] ${message}`, data || '')
+      console.log(`[${this.platform}] ${message}`, data || "");
     }
   }
 
@@ -263,14 +262,14 @@ export abstract class BaseAdapter implements PlatformAdapter {
    * @param required Array of required credential keys
    */
   protected validateRequiredCredentials(required: string[]): void {
-    const missing = required.filter(key => !this.credentials[key])
+    const missing = required.filter((key) => !this.credentials[key]);
 
     if (missing.length > 0) {
       throw new AdapterError(
-        `Missing required credentials: ${missing.join(', ')}`,
-        'MISSING_CREDENTIALS',
-        this.platform
-      )
+        `Missing required credentials: ${missing.join(", ")}`,
+        "MISSING_CREDENTIALS",
+        this.platform,
+      );
     }
   }
 
@@ -279,15 +278,15 @@ export abstract class BaseAdapter implements PlatformAdapter {
    * Helper method for adapters to map platform data to standard format
    */
   protected createPost(data: {
-    platformPostId: string
-    url: string
-    title?: string
-    content: string
-    authorName: string
-    authorUrl: string
-    mediaUrls?: string[]
-    savedAt: Date
-    metadata?: Record<string, any>
+    platformPostId: string;
+    url: string;
+    title?: string;
+    content: string;
+    authorName: string;
+    authorUrl: string;
+    mediaUrls?: string[];
+    savedAt: Date;
+    metadata?: Record<string, any>;
   }): Post {
     return {
       platformPostId: data.platformPostId,
@@ -298,7 +297,7 @@ export abstract class BaseAdapter implements PlatformAdapter {
       authorUrl: data.authorUrl,
       mediaUrls: data.mediaUrls || [],
       savedAt: data.savedAt,
-      metadata: data.metadata || {}
-    }
+      metadata: data.metadata || {},
+    };
   }
 }

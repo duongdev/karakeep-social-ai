@@ -4,7 +4,8 @@
  * Helpers for testing HTTP endpoints
  */
 
-import { Hono } from 'hono'
+import { expect } from "@jest/globals";
+import { Hono } from "hono";
 
 /**
  * Create a test request
@@ -13,24 +14,24 @@ export function createTestRequest(
   method: string,
   path: string,
   options: {
-    headers?: Record<string, string>
-    body?: unknown
-  } = {}
+    headers?: Record<string, string>;
+    body?: unknown;
+  } = {},
 ) {
-  const url = `http://localhost${path}`
+  const url = `http://localhost${path}`;
   const init: RequestInit = {
     method: method.toUpperCase(),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     },
-  }
+  };
 
   if (options.body) {
-    init.body = JSON.stringify(options.body)
+    init.body = JSON.stringify(options.body);
   }
 
-  return new Request(url, init)
+  return new Request(url, init);
 }
 
 /**
@@ -41,17 +42,17 @@ export async function testEndpoint(
   method: string,
   path: string,
   options: {
-    headers?: Record<string, string>
-    body?: unknown
-  } = {}
+    headers?: Record<string, string>;
+    body?: unknown;
+  } = {},
 ) {
-  const req = createTestRequest(method, path, options)
-  const res = await app.fetch(req)
+  const req = createTestRequest(method, path, options);
+  const res = await app.fetch(req);
 
-  let json: unknown = null
+  let json: unknown = null;
   try {
-    json = await res.json()
-  } catch (e) {
+    json = await res.json();
+  } catch (_e) {
     // Response is not JSON
   }
 
@@ -60,16 +61,16 @@ export async function testEndpoint(
     headers: Object.fromEntries(res.headers.entries()),
     json,
     response: res,
-  }
+  };
 }
 
 /**
  * Assert response is successful
  */
 export function expectSuccess(response: { status: number; json: any }) {
-  expect(response.status).toBeLessThan(400)
-  expect(response.json).toHaveProperty('success', true)
-  return response.json.data
+  expect(response.status).toBeLessThan(400);
+  expect(response.json).toHaveProperty("success", true);
+  return response.json.data;
 }
 
 /**
@@ -77,14 +78,14 @@ export function expectSuccess(response: { status: number; json: any }) {
  */
 export function expectError(
   response: { status: number; json: any },
-  statusCode?: number
+  statusCode?: number,
 ) {
   if (statusCode) {
-    expect(response.status).toBe(statusCode)
+    expect(response.status).toBe(statusCode);
   } else {
-    expect(response.status).toBeGreaterThanOrEqual(400)
+    expect(response.status).toBeGreaterThanOrEqual(400);
   }
-  expect(response.json).toHaveProperty('success', false)
-  expect(response.json).toHaveProperty('error')
-  return response.json.error
+  expect(response.json).toHaveProperty("success", false);
+  expect(response.json).toHaveProperty("error");
+  return response.json.error;
 }
