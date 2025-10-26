@@ -34,6 +34,7 @@ export {
 
 // Platform Adapters
 import { RedditAdapter } from './reddit'
+import { TwitterAdapter } from './twitter'
 
 // Register platform adapters
 adapterRegistry.register('reddit', {
@@ -42,6 +43,14 @@ adapterRegistry.register('reddit', {
   supportedAuthTypes: [AuthType.OAUTH2, AuthType.USERNAME_PASSWORD],
   requiresWebhookSupport: false,
   adapterClass: RedditAdapter
+})
+
+adapterRegistry.register('twitter', {
+  displayName: 'Twitter / X',
+  description: 'Twitter bookmarks and retweets',
+  supportedAuthTypes: [AuthType.OAUTH2, AuthType.BEARER_TOKEN],
+  requiresWebhookSupport: false,
+  adapterClass: TwitterAdapter
 })
 
 // Future platform adapters:

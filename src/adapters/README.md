@@ -178,7 +178,7 @@ describe('MyPlatformAdapter', () => {
 
 | Platform | Status | Priority | Auth Type |
 |----------|--------|----------|-----------|
-| Twitter/X | ⏳ Planned | High | OAuth2 / Bearer |
+| Twitter/X | ✅ Implemented | High | OAuth2 / Bearer |
 | Reddit | ✅ Implemented | High | OAuth2 / Password |
 | GitHub | ⏳ Planned | High | PAT / OAuth2 |
 | YouTube | ⏳ Planned | Medium | OAuth2 |

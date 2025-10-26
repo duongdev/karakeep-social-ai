@@ -1,30 +1,50 @@
 # Twitter / X Adapter
 
 ## Status
-⏳ **Planned** - Implementation in Phase 2 (Week 4)
+✅ **Implemented** - Completed in Phase 2 (Week 4)
 
 ## Authentication
-- **Type**: OAuth 2.0 with PKCE / Bearer Token
+- **Type**: OAuth 2.0 (Bearer Token or Access Token)
 - **Required Scopes**: `tweet.read`, `users.read`, `bookmark.read`
+- **Credentials Needed**:
+  - Bearer Token (App-only) OR
+  - Access Token (OAuth 2.0 with PKCE for user context)
 
 ## Features
-- [ ] Fetch bookmarked tweets
-- [ ] Parse tweet content and media
-- [ ] Handle rate limits (50 requests per 15 minutes)
-- [ ] Pagination support
+- [x] Fetch bookmarked tweets (up to 800 most recent)
+- [x] Fetch user retweets from timeline
+- [x] Parse tweet content and media
+- [x] Handle pagination for both endpoints
+- [x] Rate limiting (18s for bookmarks, 1s for tweets)
+- [x] Media URL extraction (photos, videos, GIFs)
+- [x] Hashtag and mention extraction
+- [x] URL expansion (unwound URLs)
+- [x] Public metrics (likes, retweets, replies)
+- [x] Retweet detection and filtering
+- [x] Comprehensive metadata preservation
+
+## Usage
+
+### Basic Example
+
+```typescript
+import { createAdapter } from '@/adapters'
+
+// Using Bearer Token (App-only)
+const adapter = createAdapter('twitter', {
+  bearerToken: process.env.TWITTER_BEARER_TOKEN
+})
+
+// Fetch all saved posts (bookmarks + retweets)
+const posts = await adapter.fetchSavedPosts()
+```
 
 ## API Documentation
-- [Twitter API v2 Bookmarks](https://developer.x.com/en/docs/x-api/tweets/bookmarks/introduction)
-- [Authentication Guide](https://developer.x.com/en/docs/authentication/oauth-2-0)
 
-## Implementation Plan
-1. Create OAuth2 client
-2. Implement bookmark fetching
-3. Map tweet data to Post format
-4. Add rate limiting
-5. Write tests
+- [Twitter API v2 Overview](https://developer.twitter.com/en/docs/twitter-api)
+- [Bookmarks Endpoint](https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/get-users-id-bookmarks)
+- [OAuth 2.0 Authentication](https://developer.twitter.com/en/docs/authentication/oauth-2-0)
 
-## Notes
-- Bookmarks endpoint returns max 800 most recent tweets
-- Requires OAuth 2.0 user context
-- Rate limits: 50 requests per 15 minutes
+---
+
+**Phase 2 - Week 4: Twitter/X Adapter** ✅ **COMPLETED**

@@ -133,11 +133,12 @@ This roadmap breaks down the Karakeep implementation into manageable phases over
 
 **Priority Order:**
 
-1. **Twitter/X Adapter**
-   - [ ] Authentication (Bearer token)
-   - [ ] Fetch bookmarks endpoint
-   - [ ] Parse tweets and media
-   - [ ] Handle rate limits
+1. **Twitter/X Adapter** ✅ **COMPLETED**
+   - [x] Authentication (Bearer token / OAuth 2.0)
+   - [x] Fetch bookmarks endpoint
+   - [x] Fetch user retweets
+   - [x] Parse tweets and media
+   - [x] Handle rate limits
 
 2. **Reddit Adapter** ✅ **COMPLETED**
    - [x] OAuth2 authentication
