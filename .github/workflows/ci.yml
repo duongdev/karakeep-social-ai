@@ -50,6 +50,8 @@ jobs:
         run: npm ci
 
       - name: Generate Prisma Client
+        env:
+          DATABASE_URL: postgresql://karakeep:karakeep_test_password@localhost:5432/karakeep_test?schema=public
         run: npm run db:generate
 
       - name: Run database migrations
@@ -114,6 +116,8 @@ jobs:
         run: npm ci
 
       - name: Generate Prisma Client
+        env:
+          DATABASE_URL: postgresql://karakeep:karakeep_test_password@localhost:5432/karakeep_test?schema=public
         run: npm run db:generate
 
       - name: Build project
