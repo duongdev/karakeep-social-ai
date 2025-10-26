@@ -1,0 +1,167 @@
+// Karakeep Social AI - Database Schema
+// Complete schema for multi-platform bookmark management with AI features
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum SyncStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum TriggerType {
+  CRON      // Scheduled automatic sync
+  MANUAL    // User-triggered sync
+  WEBHOOK   // Real-time webhook (if available)
+}
+
+// ============================================================================
+// MODELS
+// ============================================================================
+
+model Account {
+  id            String    @id @default(uuid())
+  platform      String    // 'twitter', 'reddit', 'github', 'youtube', etc.
+  username      String?
+  authType      String    // 'token', 'cookie', 'oauth'
+  credentials   Json      // encrypted tokens/cookies
+  isActive      Boolean   @default(true)
+  lastSyncedAt  DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  bookmarks     Bookmark[]
+  syncJobs      SyncJob[]
+
+  @@map("accounts")
+}
+
+model Bookmark {
+  id              String    @id @default(uuid())
+  accountId       String
+  platform        String
+  platformPostId  String
+  url             String
+  title           String?
+  content         String?   // post text/description
+  authorName      String?
+  authorUrl       String?
+  mediaUrls       Json?     // array of images, videos
+  metadata        Json?     // platform-specific data
+  savedAt         DateTime? // when saved on platform
+  syncedAt        DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+
+  account         Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  aiAnalysis      AIAnalysis?
+  lists           BookmarkList[]
+  tags            BookmarkTag[]
+
+  @@unique([platform, platformPostId, accountId])
+  @@index([accountId])
+  @@index([platform])
+  @@index([savedAt])
+  @@map("bookmarks")
+}
+
+model AIAnalysis {
+  id          String    @id @default(uuid())
+  bookmarkId  String    @unique
+  summary     String?
+  keyPoints   Json?     // array of key takeaways
+  topics      Json?     // array of detected topics
+  sentiment   String?   // positive, negative, neutral, mixed
+  language    String?
+  transcript  String?   // full transcript for video/audio content
+  duration    Int?      // duration in seconds for video/audio
+  analyzedAt  DateTime  @default(now())
+  modelUsed   String    @default("claude-3-5-sonnet-20241022")
+
+  bookmark    Bookmark  @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+
+  @@index([bookmarkId])
+  @@map("ai_analysis")
+}
+
+model List {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  color       String?   // hex color
+  icon        String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  bookmarks   BookmarkList[]
+
+  @@map("lists")
+}
+
+model Tag {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  color       String?
+  createdAt   DateTime  @default(now())
+
+  bookmarks   BookmarkTag[]
+
+  @@map("tags")
+}
+
+model BookmarkList {
+  bookmarkId  String
+  listId      String
+  addedAt     DateTime  @default(now())
+
+  bookmark    Bookmark  @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@id([bookmarkId, listId])
+  @@map("bookmark_lists")
+}
+
+model BookmarkTag {
+  bookmarkId  String
+  tagId       String
+  confidence  Float?    // AI confidence score (0-1)
+  addedAt     DateTime  @default(now())
+
+  bookmark    Bookmark  @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([bookmarkId, tagId])
+  @@index([tagId])
+  @@map("bookmark_tags")
+}
+
+model SyncJob {
+  id            String      @id @default(uuid())
+  accountId     String?
+  status        SyncStatus  @default(PENDING)
+  triggerType   TriggerType
+  itemsSynced   Int         @default(0)
+  errorMessage  String?
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime    @default(now())
+
+  account       Account?    @relation(fields: [accountId], references: [id], onDelete: SetNull)
+
+  @@index([accountId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("sync_jobs")
+}

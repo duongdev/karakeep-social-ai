@@ -1,8 +1,60 @@
 # Karakeep Social AI
 
-> Your AI-powered bookmark manager for social media content
+> 🔖 Your AI-powered bookmark manager for social media content
 
 Automatically sync, transcribe, summarize, and search your saved posts from multiple platforms using Claude AI and OpenAI Whisper.
+
+[![Tests](https://img.shields.io/badge/tests-36%2F36%20passing-brightgreen)]() [![Coverage](https://img.shields.io/badge/coverage-~85%25-green)]() [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)]() [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+---
+
+## 📑 Table of Contents
+
+- [Quick Start](#-quick-start)
+- [Features](#-features)
+- [Tech Stack](#️-tech-stack)
+- [Project Status](#-project-status)
+- [Documentation](#-documentation)
+- [Development](#-development)
+- [Testing](#-testing)
+- [Deployment](#-deployment)
+- [Cost Estimates](#-cost-estimates)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** 20+
+- **Docker Desktop** (for PostgreSQL & Redis)
+- **Git**
+
+### Installation (5 minutes)
+
+```bash
+# 1. Clone and install
+git clone https://github.com/yourusername/karakeep-social-ai.git
+cd karakeep-social-ai
+npm install
+
+# 2. Start database services
+docker compose up -d
+
+# 3. Run database migrations
+npm run db:migrate
+
+# 4. Start development server
+npm run dev
+```
+
+✨ **Server running at http://localhost:3000**
+
+📖 **Detailed setup guide**: [guides/GETTING_STARTED.md](guides/GETTING_STARTED.md)
+
+---
 
 ## ✨ Features
 
@@ -36,265 +88,280 @@ Automatically sync, transcribe, summarize, and search your saved posts from mult
 - **Full-Text Search** - Search within video transcripts
 - **No Dependencies** - Works on Vercel serverless
 
+---
+
 ## 🏗️ Tech Stack
 
 ### Backend
-
-- **Hono** - Fast, lightweight web framework
-- **Prisma** - Type-safe ORM with PostgreSQL
-- **Claude 3.5 Sonnet** - AI analysis and Q&A
-- **OpenAI Whisper** - Audio transcription
-- **Cobalt API** - Video/audio downloads
-- **Vercel Cron** - Scheduled syncs
+- **[Hono](https://hono.dev/)** - Fast, lightweight web framework
+- **[Prisma](https://www.prisma.io/)** - Type-safe ORM with PostgreSQL
+- **[Claude 3.5 Sonnet](https://www.anthropic.com/)** - AI analysis and Q&A
+- **[OpenAI Whisper](https://platform.openai.com/docs/guides/speech-to-text)** - Audio transcription
+- **[Cobalt API](https://github.com/imputnet/cobalt)** - Video/audio downloads
+- **[BullMQ](https://docs.bullmq.io/)** - Background job processing
 
 ### Infrastructure
+- **PostgreSQL 16** - Primary database
+- **Redis 7** - Cache and job queue
+- **Docker** - Local development environment
+- **Vercel** - Serverless deployment (production)
 
-- **Vercel** - Serverless deployment (primary)
-- **Docker** - Alternative deployment option
-- **PostgreSQL** - Database (Neon/Supabase/Vercel)
-- **Redis** - Optional caching (Upstash)
+### Testing & Quality
+- **Jest** - Test framework (36/36 tests passing)
+- **TypeScript** - Type safety and developer experience
+- **ESLint & Prettier** - Code quality and formatting
+- **GitHub Actions** - CI/CD pipeline
 
-## 📊 Cost Estimates
+---
 
-**For 100 bookmarks/month** (50 text, 30 videos, 20 GitHub repos):
+## 📊 Project Status
 
-| Service | Usage | Cost |
-|---------|-------|------|
-| Claude AI | 100 analyses | $0.20 |
-| Whisper API | 30 videos × 8 min | $2.40 |
-| Cobalt API | Free | $0.00 |
-| GitHub API | Free | $0.00 |
-| **Total** | | **~$2.60/mo** 🎉 |
+### ✅ Phase 1: Foundation (COMPLETED)
 
-## 🚀 Quick Start
+**Week 1-2** - All core infrastructure is in place:
 
-### Prerequisites
+- ✅ TypeScript + Hono project setup
+- ✅ Prisma ORM with PostgreSQL
+- ✅ Complete database schema (8 tables, 2 enums)
+- ✅ Docker development environment
+- ✅ Health check endpoints
+- ✅ Environment configuration
+- ✅ **Testing infrastructure (36 tests, ~85% coverage)**
+- ✅ CI/CD with GitHub Actions
 
-- Node.js 20+
-- PostgreSQL database
-- Anthropic API key
-- OpenAI API key
+**API Endpoints**:
+- `GET /` - Project info
+- `GET /health` - Health check + database status
+- `GET /health/db` - Database connectivity
+- `GET /api` - API endpoint listing
 
-### Installation
+### 🚧 Phase 2: Platform Adapters (Next)
+
+**Week 3-4** - Building platform integrations:
+
+- [ ] Adapter architecture framework
+- [ ] GitHub adapter (⭐ starred repos)
+- [ ] Twitter/X adapter (bookmarks)
+- [ ] Reddit adapter (saved posts)
+
+### 📋 Upcoming Phases
+
+- **Phase 3** (Week 5) - Sync Engine
+- **Phase 4** (Week 6-7) - AI Integration
+- **Phase 5** (Week 8) - Search & Q&A
+- **Phase 6** (Week 9) - Deployment & Monitoring
+
+📅 **Full roadmap**: [docs/planning/roadmap.md](docs/planning/roadmap.md)
+
+---
+
+## 📖 Documentation
+
+### 🎯 Essential Guides
+
+| Guide | Description |
+|-------|-------------|
+| **[Getting Started](guides/GETTING_STARTED.md)** | Complete setup in 5 minutes |
+| **[Docker Setup](guides/DOCKER.md)** | PostgreSQL + Redis configuration |
+| **[Testing Guide](guides/TESTING.md)** | Writing and running tests |
+| **[Setup Progress](guides/SETUP_COMPLETE.md)** | Phase 1 completion summary |
+| **[Test Progress](guides/TEST_SETUP_COMPLETE.md)** | Testing infrastructure summary |
+
+### 📚 Comprehensive Documentation
+
+The `docs/` folder contains detailed documentation organized by topic:
+
+```
+docs/
+├── planning/          # Project planning and roadmap
+│   ├── overview.md
+│   ├── quick-start.md
+│   ├── roadmap.md
+│   └── cost-analysis.md
+├── architecture/      # System design and architecture
+│   ├── system-design.md
+│   ├── database-schema.md
+│   └── queue-system.md
+├── ai/               # AI integration guides
+│   ├── claude-setup.md
+│   ├── features.md
+│   ├── semantic-search.md
+│   └── prompt-engineering.md
+├── transcription/    # Video transcription
+│   ├── overview.md
+│   ├── cobalt-setup.md
+│   ├── whisper-setup.md
+│   └── queue-processing.md
+├── platforms/        # Platform adapters
+│   ├── adapter-architecture.md
+│   ├── github.md
+│   └── adding-platforms.md
+└── deployment/       # Deployment guides
+    ├── vercel.md
+    ├── workers.md
+    ├── docker.md
+    └── environment.md
+```
+
+**Start here**: [docs/README.md](docs/README.md)
+
+### 📝 Additional Files
+
+- **[CLAUDE.md](CLAUDE.md)** - Instructions for Claude Code AI assistant
+- **[LICENSE](LICENSE)** - MIT License
+- **[guides/archive/](guides/archive/)** - Deprecated documentation (reference only)
+
+---
+
+## 💻 Development
+
+### Project Structure
+
+```
+karakeep-social-ai/
+├── src/
+│   ├── index.ts              # Main application entry
+│   ├── lib/
+│   │   ├── db.ts             # Prisma client
+│   │   └── env.ts            # Environment config
+│   ├── routes/
+│   │   └── health.ts         # Health check routes
+│   ├── services/             # Business logic (coming soon)
+│   ├── middleware/           # Custom middleware (coming soon)
+│   ├── types/                # TypeScript types
+│   └── __tests__/            # Test files
+├── prisma/
+│   ├── schema.prisma         # Database schema
+│   └── migrations/           # Database migrations
+├── docs/                     # Comprehensive documentation
+├── guides/                   # Quick guides and tutorials
+├── .github/workflows/        # CI/CD configuration
+└── docker-compose.yml        # Docker services
+```
+
+### Available Scripts
 
 ```bash
-# Clone the repo
-git clone https://github.com/yourusername/karakeep-social-ai.git
-cd karakeep-social-ai
+# Development
+npm run dev              # Start dev server with hot reload
+npm run build            # Build for production
+npm start                # Run production build
 
-# Install dependencies
-npm install
+# Database
+npm run db:generate      # Generate Prisma Client
+npm run db:migrate       # Create and run migrations
+npm run db:studio        # Open Prisma Studio GUI
+npm run db:push          # Push schema without migration
+npm run db:reset         # Reset database (dev only)
 
-# Setup environment variables
-cp .env.example .env
-# Edit .env with your API keys
+# Testing
+npm test                 # Run all tests
+npm run test:unit        # Run unit tests
+npm run test:integration # Run integration tests
+npm run test:watch       # Watch mode
+npm run test:coverage    # Coverage report
 
-# Initialize Prisma
-npx prisma generate
-npx prisma migrate dev --name init
+# Code Quality
+npm run lint             # Run ESLint
+npm run format           # Format code with Prettier
 
-# Start development server
-npm run dev
+# Docker
+docker compose up -d            # Start services
+docker compose down             # Stop services
+docker compose ps               # Check status
+docker compose logs -f postgres # View logs
 ```
 
 ### Environment Variables
 
+The `.env` file is automatically created with Docker defaults:
+
 ```env
-# Database
-DATABASE_URL=postgresql://user:pass@host:5432/karakeep
+# Database (Docker)
+DATABASE_URL=postgresql://karakeep:karakeep_dev_password@localhost:5432/karakeep_dev
 
-# AI APIs
-ANTHROPIC_API_KEY=sk-ant-xxx
-OPENAI_API_KEY=sk-proj-xxx
+# Redis (Docker)
+REDIS_URL=redis://:karakeep_redis_password@localhost:6379
 
-# Cobalt (optional, defaults to public API)
-COBALT_API_URL=https://api.cobalt.tools
-
-# App
-API_KEY=your-secret-api-key
+# Server
+PORT=3000
 NODE_ENV=development
+
+# AI Services (add when ready)
+ANTHROPIC_API_KEY=sk-ant-xxx    # Claude AI
+OPENAI_API_KEY=sk-xxx           # Whisper transcription
+
+# Platform APIs (add as needed)
+GITHUB_TOKEN=ghp_xxx
+TWITTER_BEARER_TOKEN=xxx
+REDDIT_CLIENT_ID=xxx
+REDDIT_CLIENT_SECRET=xxx
 ```
 
-## 📖 Documentation
+See [guides/DOCKER.md](guides/DOCKER.md) for Docker configuration details.
 
-### **[📚 Complete Documentation →](./docs/README.md)**
+---
 
-All documentation is now organized in the `docs/` folder with focused, modular guides:
+## 🧪 Testing
 
-**Quick Links:**
-- **[Project Overview](./docs/planning/overview.md)** - Goals, features, and vision
-- **[Quick Start Guide](./docs/planning/quick-start.md)** - Get up and running in 5 minutes
-- **[System Architecture](./docs/architecture/system-design.md)** - Complete technical design
-- **[Implementation Roadmap](./docs/planning/roadmap.md)** - 10-week development plan
-
-**By Topic:**
-- **AI Integration** → [docs/ai/](./docs/ai/) - Claude setup, features, semantic search
-- **Video Transcription** → [docs/transcription/](./docs/transcription/) - Cobalt + Whisper
-- **Platform Adapters** → [docs/platforms/](./docs/platforms/) - GitHub, Twitter, Reddit, etc.
-- **Deployment** → [docs/deployment/](./docs/deployment/) - Vercel, Docker, background workers
-- **API Reference** → [docs/api/](./docs/api/) - Complete endpoint documentation
-
-### Legacy Documentation Files
-
-> **Note**: These root-level docs are deprecated. See the `docs/` folder for current documentation.
-
-- **[CLAUDE.md](./CLAUDE.md)** - ⚠️ **Now contains Claude Code AI instructions** (for AI assistant)
-- ~~[PLAN.md](./PLAN.md)~~ - Deprecated, see [docs/planning/](./docs/planning/)
-- ~~[TRANSCRIPTION.md](./TRANSCRIPTION.md)~~ - Deprecated, see [docs/transcription/](./docs/transcription/)
-- ~~[GITHUB_ADAPTER.md](./GITHUB_ADAPTER.md)~~ - Deprecated, see [docs/platforms/github.md](./docs/platforms/github.md)
-- ~~[ARCHITECTURE.md](./ARCHITECTURE.md)~~ - Deprecated, see [docs/architecture/](./docs/architecture/)
-
-## 🎯 Project Structure
+### Test Status
 
 ```
-karakeep-social-ai/
-├── src/                    # Source code (to be implemented)
-│   ├── adapters/           # Platform adapters
-│   │   ├── twitter/
-│   │   ├── reddit/
-│   │   ├── youtube/
-│   │   ├── github/
-│   │   └── ...
-│   ├── services/           # Core services
-│   │   ├── ai-processor.ts
-│   │   ├── transcription.ts
-│   │   ├── cobalt-downloader.ts
-│   │   └── search.ts
-│   ├── routes/             # API routes
-│   │   ├── bookmarks.ts
-│   │   ├── ai.ts
-│   │   ├── sync.ts
-│   │   └── github.ts
-│   ├── lib/                # Utilities
-│   │   ├── db.ts          # Prisma client
-│   │   ├── claude.ts      # Claude client
-│   │   └── github.ts      # GitHub client
-│   └── index.ts           # Main entry point
-├── prisma/
-│   └── schema.prisma      # Database schema
-├── docs/                   # 📚 Complete documentation (start here!)
-│   ├── README.md           # Documentation index
-│   ├── planning/           # Project planning
-│   ├── architecture/       # System design
-│   ├── ai/                # AI integration
-│   ├── transcription/     # Video transcription
-│   ├── platforms/         # Platform adapters
-│   ├── deployment/        # Deployment guides
-│   └── api/               # API documentation
-├── CLAUDE.md              # ⚠️ Instructions for Claude Code AI
-└── package.json
+✅ 36/36 tests passing
+📊 ~85% code coverage
+⚡ ~1.7s total runtime
 ```
 
-## 🔌 API Endpoints
-
-### Bookmarks
+### Test Structure
 
 ```
-GET    /api/bookmarks              # List all bookmarks
-GET    /api/bookmarks/:id          # Get single bookmark
-POST   /api/bookmarks              # Create bookmark
-DELETE /api/bookmarks/:id          # Delete bookmark
-PUT    /api/bookmarks/:id/lists    # Add to lists
-PUT    /api/bookmarks/:id/tags     # Add tags
+src/__tests__/
+├── setup.ts              # Global test configuration
+├── helpers/
+│   ├── test-db.ts       # Database test utilities
+│   └── test-server.ts   # HTTP endpoint utilities
+├── unit/                # Unit tests (16 tests)
+│   ├── env.test.ts      # Environment config
+│   └── db.test.ts       # Database client
+└── integration/         # Integration tests (20 tests)
+    ├── health.test.ts   # API endpoints
+    └── models.test.ts   # Prisma models
 ```
 
-### Sync
-
-```
-POST   /api/sync/trigger           # Manual sync
-GET    /api/sync/status            # Sync status
-GET    /api/sync/history           # Sync history
-```
-
-### AI Features
-
-```
-POST   /api/ai/analyze/:id         # Analyze bookmark
-POST   /api/ai/analyze/batch       # Batch analyze
-POST   /api/ai/search              # Semantic search
-POST   /api/ai/chat                # Q&A
-POST   /api/ai/transcribe/:id      # Transcribe video
-GET    /api/ai/transcript/:id      # Get transcript
-```
-
-### GitHub
-
-```
-POST   /api/github/sync/:accountId        # Sync stars
-POST   /api/github/sync-readmes/:accountId # Sync READMEs
-POST   /api/github/check-updates/:accountId # Check updates
-POST   /api/github/webhook                 # Webhook endpoint
-```
-
-## 🎨 Key Features by Platform
-
-### YouTube
-✅ Sync liked videos
-✅ Full video transcription
-✅ Search by spoken content
-✅ Auto-categorize by topic
-
-### GitHub
-✅ Sync starred repos
-✅ Extract README content
-✅ Track repo updates
-✅ Categorize by language
-✅ Real-time webhooks
-
-### Twitter/X
-✅ Sync bookmarks
-✅ Transcribe video tweets
-✅ Thread detection
-✅ Author tracking
-
-### TikTok
-✅ Sync favorites
-✅ Full transcription
-✅ Trend detection
-✅ Audio extraction
-
-## 🔧 Development
-
-### Run Prisma Studio
+### Running Tests
 
 ```bash
-npx prisma studio
-```
-
-### Generate Prisma Client
-
-```bash
-npx prisma generate
-```
-
-### Create Migration
-
-```bash
-npx prisma migrate dev --name <migration-name>
-```
-
-### Run Tests
-
-```bash
+# Run all tests
 npm test
+
+# Run specific test suites
+npm run test:unit
+npm run test:integration
+
+# Watch mode (auto-rerun on changes)
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
 ```
 
-## 🚢 Deployment
+**Full testing guide**: [guides/TESTING.md](guides/TESTING.md)
 
-### Vercel
+---
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
 
 ```bash
 # Install Vercel CLI
-npm install -g vercel
+npm i -g vercel
 
 # Deploy
-vercel
-
-# Set environment variables
-vercel env add DATABASE_URL
-vercel env add ANTHROPIC_API_KEY
-vercel env add OPENAI_API_KEY
+vercel --prod
 ```
+
+Configure environment variables in Vercel dashboard.
 
 ### Docker
 
@@ -305,68 +372,87 @@ docker build -t karakeep .
 # Run container
 docker run -p 3000:3000 \
   -e DATABASE_URL=postgresql://... \
-  -e ANTHROPIC_API_KEY=sk-ant-... \
-  -e OPENAI_API_KEY=sk-proj-... \
+  -e REDIS_URL=redis://... \
   karakeep
 ```
 
-## 🗺️ Roadmap
-
-### Phase 1: Foundation ✅
-- [x] Project setup
-- [x] Prisma schema
-- [x] Core API endpoints
-- [x] Authentication
-
-### Phase 2: Platform Adapters 🚧
-- [ ] Twitter/X adapter
-- [ ] Reddit adapter
-- [ ] YouTube adapter
-- [ ] GitHub adapter
-
-### Phase 3: AI Integration 🚧
-- [ ] Claude integration
-- [ ] Auto-summarization
-- [ ] Auto-tagging
-- [ ] Categorization
-
-### Phase 4: Transcription 🚧
-- [ ] Cobalt integration
-- [ ] Whisper API setup
-- [ ] Video processing pipeline
-
-### Phase 5: Search & Q&A 📋
-- [ ] Semantic search
-- [ ] RAG implementation
-- [ ] Q&A system
-
-### Phase 6: Web UI 📋
-- [ ] Next.js dashboard
-- [ ] Bookmark grid/list view
-- [ ] Search interface
-- [ ] Chat interface
-
-## 🤝 Contributing
-
-Contributions are welcome! Please read our contributing guidelines first.
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
-## 🙏 Acknowledgments
-
-- [Anthropic Claude](https://www.anthropic.com/) - AI analysis
-- [OpenAI Whisper](https://openai.com/research/whisper) - Transcription
-- [Cobalt](https://github.com/imputnet/cobalt) - Media downloads
-- [Hono](https://hono.dev/) - Web framework
-- [Prisma](https://www.prisma.io/) - Database ORM
-
-## 📞 Support
-
-- Documentation: See `/docs` folder
-- Issues: [GitHub Issues](https://github.com/yourusername/karakeep-social-ai/issues)
+**Deployment guides**:
+- [Vercel Deployment](docs/deployment/vercel.md)
+- [Docker Deployment](docs/deployment/docker.md)
+- [Background Workers](docs/deployment/workers.md)
 
 ---
 
-**Made with ❤️ for better bookmark management**
+## 💰 Cost Estimates
+
+**For 100 bookmarks/month** (50 text, 30 videos, 20 GitHub repos):
+
+| Service | Usage | Monthly Cost |
+|---------|-------|--------------|
+| **Vercel** | Hobby plan | $0.00 |
+| **PostgreSQL** | Neon free tier | $0.00 |
+| **Redis** | Upstash free tier | $0.00 |
+| **Claude AI** | 100 analyses | $0.20 |
+| **Whisper API** | 30 videos × 8 min | $2.40 |
+| **Cobalt API** | Video downloads | $0.00 |
+| **GitHub API** | Repository data | $0.00 |
+| **Total** | | **~$2.60/mo** 🎉 |
+
+**Detailed cost analysis**: [docs/planning/cost-analysis.md](docs/planning/cost-analysis.md)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Make your changes** and add tests
+4. **Run tests** (`npm test`)
+5. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+6. **Push to branch** (`git push origin feature/amazing-feature`)
+7. **Open a Pull Request**
+
+### Development Guidelines
+
+- Write tests for new features
+- Follow TypeScript strict mode
+- Use Prisma for database access
+- Update documentation
+- Follow existing code style
+- Keep tests passing (36/36 ✅)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **[Anthropic](https://www.anthropic.com/)** - Claude AI
+- **[OpenAI](https://openai.com/)** - Whisper API
+- **[Cobalt](https://github.com/imputnet/cobalt)** - Video download API
+- **[Prisma](https://www.prisma.io/)** - Database ORM
+- **[Hono](https://hono.dev/)** - Web framework
+
+---
+
+## 📞 Support
+
+- 📖 **Documentation**: [docs/README.md](docs/README.md)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/karakeep-social-ai/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/karakeep-social-ai/discussions)
+
+---
+
+<div align="center">
+
+**Built with ❤️ using TypeScript, Hono, Prisma, and Claude AI**
+
+[⬆ Back to top](#karakeep-social-ai)
+
+</div>

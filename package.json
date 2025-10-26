@@ -1,0 +1,65 @@
+{
+  "name": "karakeep-social-ai",
+  "version": "0.1.0",
+  "description": "AI-powered bookmark manager for social media content",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "db:push": "prisma db push",
+    "db:reset": "prisma migrate reset",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=unit",
+    "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=integration",
+    "test:e2e": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=e2e",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "keywords": [
+    "bookmark",
+    "ai",
+    "social-media",
+    "claude",
+    "hono",
+    "prisma"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.29.0",
+    "@hono/node-server": "^1.13.7",
+    "@prisma/client": "^6.0.0",
+    "bullmq": "^5.28.2",
+    "dotenv": "^17.2.3",
+    "hono": "^4.6.14",
+    "openai": "^4.77.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.10.2",
+    "@types/supertest": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.17.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.4.2",
+    "prisma": "^6.0.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
