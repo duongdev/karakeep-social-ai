@@ -1,17 +1,280 @@
-# Claude AI Integration Guide
+# Project Instructions for Claude Code AI
 
-This document explains how Claude AI is integrated into Karakeep for bookmark analysis, categorization, and intelligent search.
+> **Important**: This file contains instructions for Claude Code AI assistant working on this codebase.
 
-## Table of Contents
+## Documentation Structure
 
-- [Overview](#overview)
-- [Setup](#setup)
-- [Core Features](#core-features)
-- [Implementation](#implementation)
-- [Prompt Engineering](#prompt-engineering)
-- [Cost Optimization](#cost-optimization)
-- [Best Practices](#best-practices)
-- [Troubleshooting](#troubleshooting)
+This project has comprehensive documentation organized in the `docs/` folder:
+
+```
+docs/
+├── README.md                    # Documentation index and navigation
+├── planning/                    # Project planning and roadmap
+│   ├── overview.md
+│   ├── quick-start.md
+│   ├── roadmap.md
+│   └── cost-analysis.md
+├── architecture/                # System design and architecture
+│   ├── system-design.md
+│   ├── database-schema.md
+│   └── queue-system.md
+├── ai/                         # AI integration guides
+│   ├── claude-setup.md
+│   ├── features.md
+│   ├── semantic-search.md
+│   └── prompt-engineering.md
+├── transcription/              # Video transcription docs
+│   ├── overview.md
+│   ├── cobalt-setup.md
+│   ├── whisper-setup.md
+│   └── queue-processing.md
+├── platforms/                  # Platform adapter guides
+│   ├── adapter-architecture.md
+│   ├── github.md
+│   └── adding-platforms.md
+├── deployment/                 # Deployment guides
+│   ├── vercel.md
+│   ├── workers.md
+│   ├── docker.md
+│   └── environment.md
+└── api/                        # API documentation
+    └── endpoints.md
+```
+
+## Research Latest Technology Documentation
+
+### CRITICAL: Always Research Before Implementing
+
+Before writing any code or making architectural decisions:
+
+1. **Research official documentation** for the latest best practices:
+   - Use WebSearch or WebFetch tools to find official docs
+   - Check for breaking changes and deprecations
+   - Verify API versions and compatibility
+   - Look for official migration guides
+
+2. **Check for latest versions**:
+   - Prisma: https://www.prisma.io/docs
+   - Hono: https://hono.dev/
+   - Claude API: https://docs.anthropic.com/
+   - OpenAI Whisper: https://platform.openai.com/docs/guides/speech-to-text
+   - Vercel: https://vercel.com/docs
+   - BullMQ: https://docs.bullmq.io/
+
+3. **Verify best practices**:
+   - Security patterns (authentication, rate limiting)
+   - Performance optimizations
+   - Error handling standards
+   - TypeScript patterns
+   - Testing strategies
+
+4. **Research before suggesting alternatives**:
+   - If suggesting a library/framework, research it first
+   - Compare multiple options with official docs
+   - Check maintenance status, community support
+   - Verify compatibility with existing stack
+
+### Example Research Workflow
+
+```
+User: "Add Redis caching"
+Claude:
+1. WebSearch "Redis TypeScript best practices 2025"
+2. WebFetch official Redis client docs
+3. Read docs/architecture/system-design.md
+4. Propose implementation following both official and local patterns
+```
+
+## How to Read Documentation
+
+### Before Starting Any Task
+
+1. **Always read `docs/README.md` first** - It provides the complete documentation index
+2. **Research official tech docs** for the technologies you'll be using
+3. **Check relevant documentation sections** based on your task:
+   - Adding features? → Read architecture and relevant platform docs
+   - Fixing bugs? → Read system design and specific component docs
+   - Deploying? → Read deployment guides
+   - Working with AI? → Read ai/ folder docs
+
+### Understanding the Project
+
+Start with these in order:
+1. `docs/planning/overview.md` - Project goals and features
+2. `docs/architecture/system-design.md` - Technical architecture
+3. `docs/architecture/database-schema.md` - Data models
+4. `docs/planning/roadmap.md` - Implementation timeline
+
+### For Specific Tasks
+
+- **AI Features**: Read `docs/ai/` folder
+- **Video Transcription**: Read `docs/transcription/` folder
+- **Platform Integration**: Read `docs/platforms/adapter-architecture.md` first
+- **Deployment Issues**: Read `docs/deployment/` and `docs/architecture/queue-system.md`
+
+## Keeping Documentation Up-to-Date
+
+### When to Update Documentation
+
+Update docs when you:
+- ✅ Add new features or components
+- ✅ Change architecture or system design
+- ✅ Modify database schema
+- ✅ Update API endpoints
+- ✅ Change deployment process
+- ✅ Discover better practices
+- ✅ Fix documentation errors or outdated information
+
+### How to Update Documentation
+
+1. **Identify affected files**:
+   - Use `docs/README.md` to find relevant doc files
+   - Check cross-references in related docs
+
+2. **Update multiple related files**:
+   - If you change database schema, update `docs/architecture/database-schema.md`
+   - If you add an API endpoint, update `docs/api/endpoints.md`
+   - If you modify deployment, update relevant `docs/deployment/*.md`
+
+3. **Maintain consistency**:
+   - Use the same terminology across all docs
+   - Update code examples to match actual implementation
+   - Fix broken cross-references
+   - Update "Last Updated" dates
+
+4. **Add cross-references**:
+   - Link related documentation files
+   - Add "Related Documentation" sections at the bottom
+   - Use relative links: `[Queue System](../architecture/queue-system.md)`
+
+5. **Update the index**:
+   - If adding new doc files, update `docs/README.md`
+   - Add to appropriate reading paths
+   - Update status table if needed
+
+### Documentation Update Checklist
+
+**MANDATORY**: After EVERY code change, update documentation:
+
+- [ ] Updated relevant documentation files
+- [ ] Added/updated code examples to match actual implementation
+- [ ] Fixed cross-references and links
+- [ ] Updated "Last Updated" date
+- [ ] Checked for consistency with related docs
+- [ ] Updated `docs/README.md` if structure changed
+- [ ] Verified all markdown links work
+- [ ] Updated API documentation if endpoints changed
+- [ ] Updated schema documentation if database changed
+- [ ] Synced code examples with actual implementation
+- [ ] Verified environment variables are documented
+
+### CRITICAL: Documentation Must Stay Current
+
+**You MUST update documentation in the same session as code changes:**
+
+1. **Immediate Updates**: Never defer documentation to later
+2. **Code-Doc Parity**: Every code change = corresponding doc update
+3. **Example Accuracy**: All code examples must match actual implementation
+4. **No Stale Docs**: Check for outdated information and fix it
+5. **Proactive Updates**: If you notice outdated docs while reading, fix them immediately
+
+**Example Workflow**:
+```
+1. User: "Add rate limiting to API"
+2. Claude:
+   - Researches rate limiting best practices
+   - Reads docs/architecture/system-design.md
+   - Implements rate limiting
+   - IMMEDIATELY updates docs/architecture/system-design.md
+   - Updates docs/api/endpoints.md with rate limit headers
+   - Updates docs/deployment/environment.md with RATE_LIMIT_* vars
+   - Updates code examples in all affected docs
+```
+
+**Red Flags** (Never do this):
+- ❌ "I'll update the docs later"
+- ❌ "Documentation is outdated but code works"
+- ❌ Code examples that don't match implementation
+- ❌ Missing environment variables in docs
+
+## Code Implementation Guidelines
+
+### Always Check Documentation First
+
+Before implementing:
+1. Read the relevant design docs to understand the architecture
+2. Check if there's existing implementation guidance
+3. Follow established patterns from other adapters/services
+4. Review cost implications in `docs/planning/cost-analysis.md`
+
+### Follow Established Patterns
+
+- **Platform Adapters**: Follow the pattern in `docs/platforms/adapter-architecture.md`
+- **AI Integration**: Follow patterns in `docs/ai/` folder
+- **Queue Processing**: Follow `docs/architecture/queue-system.md`
+- **Database Access**: Use Prisma as shown in `docs/architecture/database-schema.md`
+
+### Code Quality Standards
+
+- ✅ TypeScript strict mode
+- ✅ Full type safety (no `any` types)
+- ✅ Prisma for all database access
+- ✅ Error handling with try-catch
+- ✅ Input validation with Zod
+- ✅ Rate limiting for external APIs
+- ✅ Proper logging
+
+## Platform Adapter Strategy
+
+### When to Create Detailed Adapter Documentation
+
+**Create full documentation for:**
+- ✅ **GitHub** (complex: webhooks, README extraction, updates tracking)
+- ✅ **YouTube** (complex: OAuth, video metadata, transcription integration)
+- ✅ **Reddit** (medium: OAuth, multiple content types)
+
+**Use minimal documentation for:**
+- Simple adapters with straightforward APIs
+- Platforms with similar patterns to existing adapters
+- Initial prototypes
+
+### Adapter Documentation Template
+
+For platforms that need detailed docs, create `docs/platforms/{platform}.md` with:
+- Authentication setup
+- API endpoints used
+- Data mapping (platform fields → bookmark model)
+- Rate limits and quotas
+- Webhook setup (if available)
+- Special considerations
+- Code examples
+
+### Quick Reference in adapter-architecture.md
+
+For simpler platforms, just add a section in `docs/platforms/adapter-architecture.md` with:
+- Platform name
+- Auth type
+- Main API endpoint
+- Basic example
+
+## Cost Awareness
+
+Always consider costs when implementing:
+- AI API calls (Claude, Whisper) - See `docs/planning/cost-analysis.md`
+- External API rate limits
+- Database queries (optimize with indexes)
+- Serverless function execution time
+
+## Questions?
+
+If documentation is unclear:
+1. Ask the user for clarification
+2. Update the documentation with the answer
+3. Add to FAQ if it's a common question
+
+---
+
+**Remember**: Good documentation saves time. Always keep it current!
 
 ## Overview
 

@@ -117,18 +117,38 @@ NODE_ENV=development
 
 ## 📖 Documentation
 
-Comprehensive guides for implementation:
+### **[📚 Complete Documentation →](./docs/README.md)**
 
-- **[PLAN.md](./PLAN.md)** - Complete implementation roadmap
-- **[CLAUDE.md](./CLAUDE.md)** - Claude AI integration guide
-- **[TRANSCRIPTION.md](./TRANSCRIPTION.md)** - Video transcription setup
-- **[GITHUB_ADAPTER.md](./GITHUB_ADAPTER.md)** - GitHub stars sync
+All documentation is now organized in the `docs/` folder with focused, modular guides:
+
+**Quick Links:**
+- **[Project Overview](./docs/planning/overview.md)** - Goals, features, and vision
+- **[Quick Start Guide](./docs/planning/quick-start.md)** - Get up and running in 5 minutes
+- **[System Architecture](./docs/architecture/system-design.md)** - Complete technical design
+- **[Implementation Roadmap](./docs/planning/roadmap.md)** - 10-week development plan
+
+**By Topic:**
+- **AI Integration** → [docs/ai/](./docs/ai/) - Claude setup, features, semantic search
+- **Video Transcription** → [docs/transcription/](./docs/transcription/) - Cobalt + Whisper
+- **Platform Adapters** → [docs/platforms/](./docs/platforms/) - GitHub, Twitter, Reddit, etc.
+- **Deployment** → [docs/deployment/](./docs/deployment/) - Vercel, Docker, background workers
+- **API Reference** → [docs/api/](./docs/api/) - Complete endpoint documentation
+
+### Legacy Documentation Files
+
+> **Note**: These root-level docs are deprecated. See the `docs/` folder for current documentation.
+
+- **[CLAUDE.md](./CLAUDE.md)** - ⚠️ **Now contains Claude Code AI instructions** (for AI assistant)
+- ~~[PLAN.md](./PLAN.md)~~ - Deprecated, see [docs/planning/](./docs/planning/)
+- ~~[TRANSCRIPTION.md](./TRANSCRIPTION.md)~~ - Deprecated, see [docs/transcription/](./docs/transcription/)
+- ~~[GITHUB_ADAPTER.md](./GITHUB_ADAPTER.md)~~ - Deprecated, see [docs/platforms/github.md](./docs/platforms/github.md)
+- ~~[ARCHITECTURE.md](./ARCHITECTURE.md)~~ - Deprecated, see [docs/architecture/](./docs/architecture/)
 
 ## 🎯 Project Structure
 
 ```
 karakeep-social-ai/
-├── src/
+├── src/                    # Source code (to be implemented)
 │   ├── adapters/           # Platform adapters
 │   │   ├── twitter/
 │   │   ├── reddit/
@@ -152,11 +172,16 @@ karakeep-social-ai/
 │   └── index.ts           # Main entry point
 ├── prisma/
 │   └── schema.prisma      # Database schema
-├── docs/
-│   ├── PLAN.md
-│   ├── CLAUDE.md
-│   ├── TRANSCRIPTION.md
-│   └── GITHUB_ADAPTER.md
+├── docs/                   # 📚 Complete documentation (start here!)
+│   ├── README.md           # Documentation index
+│   ├── planning/           # Project planning
+│   ├── architecture/       # System design
+│   ├── ai/                # AI integration
+│   ├── transcription/     # Video transcription
+│   ├── platforms/         # Platform adapters
+│   ├── deployment/        # Deployment guides
+│   └── api/               # API documentation
+├── CLAUDE.md              # ⚠️ Instructions for Claude Code AI
 └── package.json
 ```
 
