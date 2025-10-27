@@ -9,6 +9,7 @@ Complete documentation for building and deploying Karakeep Social AI, your AI-po
 - [Quick Start Guide](./planning/quick-start.md) - Get up and running in 5 minutes
 - [Web Dashboard Plan](./planning/web-dashboard-plan.md) - 🆕 Build UI for managing accounts & bookmarks
 - [Hono RPC Integration](./planning/hono-rpc-integration.md) - 🆕 End-to-end type-safe API client
+- [Authentication Strategy](./planning/authentication-strategy.md) - 🆕 User auth with Better Auth
 - [Development Roadmap](./planning/roadmap.md) - 10-week implementation plan
 
 ### Planning & Architecture
@@ -59,6 +60,7 @@ Complete documentation for building and deploying Karakeep Social AI, your AI-po
 
 ### I want to...
 - **Build a web dashboard** → [Web Dashboard Plan](./planning/web-dashboard-plan.md) 🆕
+- **Set up authentication** → [Authentication Strategy](./planning/authentication-strategy.md) 🆕
 - **Set up type-safe API** → [Hono RPC Integration](./planning/hono-rpc-integration.md) 🆕
 - **Start syncing my bookmarks** → [Platform Getting Started](./platforms/getting-started.md)
 - **Get started quickly** → [Quick Start Guide](./planning/quick-start.md)
