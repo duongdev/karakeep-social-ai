@@ -107,6 +107,7 @@ karakeep-social-ai/
 - **Lucide Icons** - Modern icon library
 
 **Data Fetching & State**:
+- **Hono RPC** - End-to-end type-safe API client ([See guide](./hono-rpc-integration.md))
 - **TanStack Query (React Query) v5** - Server state management
 - **TanStack Table v8** - Advanced data tables
 - **Zustand** - Client state (minimal, if needed)
@@ -686,6 +687,7 @@ export function AccountCard({ account, onRemove }: AccountCardProps) {
 
 ## Related Documentation
 
+- **[Hono RPC Integration](./hono-rpc-integration.md)** - Complete guide for type-safe frontend/backend communication
 - [System Architecture](../architecture/system-design.md)
 - [Platform Getting Started](../platforms/getting-started.md)
 - [Vercel Deployment](../deployment/vercel.md)
