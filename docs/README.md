@@ -7,6 +7,7 @@ Complete documentation for building and deploying Karakeep Social AI, your AI-po
 ### Getting Started
 - [Project Overview](./planning/overview.md) - Project goals, features, and architecture
 - [Quick Start Guide](./planning/quick-start.md) - Get up and running in 5 minutes
+- [Web Dashboard Plan](./planning/web-dashboard-plan.md) - 🆕 Build UI for managing accounts & bookmarks
 - [Development Roadmap](./planning/roadmap.md) - 10-week implementation plan
 
 ### Planning & Architecture
@@ -56,7 +57,8 @@ Complete documentation for building and deploying Karakeep Social AI, your AI-po
 ## 🎯 Quick Navigation by Task
 
 ### I want to...
-- **Start syncing my bookmarks** → [Platform Getting Started](./platforms/getting-started.md) 🆕
+- **Build a web dashboard** → [Web Dashboard Plan](./planning/web-dashboard-plan.md) 🆕
+- **Start syncing my bookmarks** → [Platform Getting Started](./platforms/getting-started.md)
 - **Get started quickly** → [Quick Start Guide](./planning/quick-start.md)
 - **Understand the architecture** → [System Architecture](./architecture/system-design.md)
 - **Set up AI features** → [Claude Setup](./ai/claude-setup.md)
